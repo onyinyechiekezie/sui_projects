@@ -1,5 +1,8 @@
 module wwtbas::wwtbas{
 
+    use sui:: transfer:: public_transfer;
+    use sui:: test_scenario:: sender;
+
     
     public struct Quiz has key, store{
         id:UID,
@@ -11,11 +14,12 @@ module wwtbas::wwtbas{
     // }
 
     public fun new_quiz(ctx : &mut TxContext):Quiz{
-        let quiz = Quiz = Quiz{
+        let quiz= Quiz = Quiz{
             id:object::new(ctx),
 
         };
-        (quiz)
+        transfer::public_transfer(quiz, ctx.sender());
+        // (quiz)
 
 }
     
