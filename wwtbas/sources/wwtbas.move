@@ -1,11 +1,14 @@
 module wwtbas::wwtbas{
 
-    use sui:: transfer:: public_transfer;
-    use sui:: test_scenario:: sender;
+    use sui::string;
+    use sui::string::String;
+    use std::debug;
+    use std::vector;
 
     
     public struct Quiz has key, store{
         id:UID,
+        questions:vector<String>,
 
     }
 
@@ -13,13 +16,25 @@ module wwtbas::wwtbas{
     //     quiz.id;
     // }
 
-    public fun new_quiz(ctx : &mut TxContext):Quiz{
-        let quiz= Quiz = Quiz{
+    public fun new_quiz(ctx : &mut TxContext){
+        let quiz= Quiz{
             id:object::new(ctx),
+            questions :vector[]
 
         };
+        debug::print(&quiz);
         transfer::public_transfer(quiz, ctx.sender());
-        // (quiz)
+    }
+
+    public fun add_questions(quiz: &mut Quiz, question:String){
+        let questions = &mut quiz.questions;
+        questions.push_back(question);
+        debug::print(questions);
+    }
+
+    // public fun get_questions(quiz:Quiz) : vector<vector<u8>>{
+    //     return quiz.questions;
+    // }
 
 }
     
@@ -32,7 +47,7 @@ module wwtbas::wwtbas{
     //-Questions
     //-Options
     //
-}
+
 
 
 
